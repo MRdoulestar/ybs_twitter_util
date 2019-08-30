@@ -1,4 +1,5 @@
 import os,time,random
+import logging
 import schedule
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
@@ -8,8 +9,8 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 # Single target
 Receiver = 'userid'
-twitterUsername=''
-twitterPassword=''
+twitterUsername='xxx@163.com'
+twitterPassword='xxx'
 
 
 chrome_options = Options()
@@ -71,27 +72,35 @@ def twitterPost():
 	# Submit
 	time.sleep(3)
 	twitterBrowser.find_elements_by_class_name('r-1fneopy')[2].click()
-	# twitterBrowser.find_element_by_class_name('r-lrvibr').click()
 
 def job():
-	print('job working ...  timestamp: ' + str(time.time()))
+	logging.info('job working ...  timestamp: ' + str(time.time()))
 	try:
 		twitterBrowser = openTwitter()
-		time.sleep(4)
+		time.sleep(3)
 		twitterLogin()
-		time.sleep(5)
+		time.sleep(4)
 		twitterPost()
 
 		time.sleep(3)
 		twitterBrowser.quit()
-		print('job end ...')
+		logging.info('job end ...')
 	except Exception as e:
-		print("job error::::")
-		print(e)
+		logging.info("job error::::")
+		logging.info(e)
 		twitterBrowser.quit()
 
 
 if __name__ == "__main__":
+	logging.basicConfig(level=logging.DEBUG,#控制台打印的日志级别
+                    filename='ybs_twitter_log.log',
+                    filemode='a', ##模式，有w和a，w就是写模式，每次都会重新写日志，覆盖之前的日志
+                    #a是追加模式，默认如果不写的话，就是追加模式
+                    format=
+                    '%(asctime)s - %(pathname)s[line:%(lineno)d] - %(levelname)s: %(message)s'
+                    #日志格式
+                    )
+	logging.info('Schedule starting ...')
 	schedule.every().day.at("08:00").do(job)
 	while True:
 	    schedule.run_pending()
@@ -108,8 +117,8 @@ if __name__ == "__main__":
 # b.get('http://baidu.com')
 
 # source = b.page_source
-# print(source)
-# print('title:  ' + b.title)
+# logging.info(source)
+# logging.info('title:  ' + b.title)
 # #b.close()
 # b.quit()
 
