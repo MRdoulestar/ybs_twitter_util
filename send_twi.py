@@ -1,6 +1,8 @@
 import os,time,random
 import schedule
 from selenium import webdriver
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
@@ -27,6 +29,7 @@ def openTwitter():
 	twitterBrowser=webdriver.Chrome(options=chrome_options)
 	twitterBrowser.maximize_window()
 	twitterBrowser.get(twitterUrl)
+	return twitterBrowser
 
 # User login
 def twitterLogin():
@@ -49,26 +52,31 @@ def twitterPost():
 	time.sleep(2)
 
 	# AT
-	twitterBrowser.find_elements_by_class_name('r-3s2u2q')[0].click()
-	# find the target
-	time.sleep(2)
-	twitterBrowser.find_elements_by_class_name('r-30o5oe')[0].send_keys(Receiver)
-	# choice target
-	time.sleep(5)
-	twitterBrowser.find_elements_by_class_name('r-1j63xyz')[0].click()
-	# close tab
-	time.sleep(1)
-	twitterBrowser.find_elements_by_class_name('r-1fneopy')[0].click()
+	twitterBrowser.find_element_by_xpath('/html/body/div/div/div/div/main/div/div/div/div[1]/div/div[2]/div[2]/div[1]/div/div/div[2]/div[1]/div/div/div/div/div/div/div/div/div[1]/div/div/div/div[2]/div/div/div/div').click()
+	ActionChains(twitterBrowser).send_keys(Receiver).perform()
+	ActionChains(twitterBrowser).send_keys(Keys.ENTER).perform()
+	
+	# Tag someone in picture
+	# twitterBrowser.find_elements_by_class_name('r-3s2u2q')[0].click()
+	# # find the target
+	# time.sleep(2)
+	# twitterBrowser.find_elements_by_class_name('r-30o5oe')[0].send_keys(Receiver)
+	# # choice target
+	# time.sleep(5)
+	# twitterBrowser.find_elements_by_class_name('r-1j63xyz')[0].click()
+	# # close tab
+	# time.sleep(1)
+	# twitterBrowser.find_elements_by_class_name('r-1fneopy')[0].click()
 
 	# Submit
-	time.sleep(4)
+	time.sleep(3)
 	twitterBrowser.find_elements_by_class_name('r-1fneopy')[2].click()
 	# twitterBrowser.find_element_by_class_name('r-lrvibr').click()
 
 def job():
 	print('job working ...  timestamp: ' + str(time.time()))
 	try:
-		openTwitter()
+		twitterBrowser = openTwitter()
 		time.sleep(4)
 		twitterLogin()
 		time.sleep(5)
