@@ -1,7 +1,5 @@
 import os,time,random
 import logging
-import schedule
-import configparser
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
@@ -10,12 +8,10 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 
 class ybsTwitterUtilClass:
-	def __init__(self):
-		conf = configparser.ConfigParser()
-		conf.read("config.ini")
-		self.Receiver = conf.get('user', 'Receiver')
-		self.twitterUsername = conf.get('user', 'twitterUsername')
-		self.twitterPassword = conf.get('user', 'twitterPassword')
+	def __init__(self, Receiver, twitterUsername, twitterPassword):
+		self.Receiver = Receiver
+		self.twitterUsername = twitterUsername
+		self.twitterPassword = twitterPassword
 		self.chrome_options = Options()
 		# chrome_options.add_argument('--headless')
 		self.chrome_options.add_argument('--disable-gpu')
