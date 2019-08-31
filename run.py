@@ -42,7 +42,7 @@ if __name__ == "__main__":
 
 	# Do schedule
 	for user in users:
-		Receiver = user['Receiver']
+		Receiver = '@' + user['Receiver']
 		twitterUsername = user['twitterUsername']
 		twitterPassword = user['twitterPassword']
 		foo = ybsTwitterUtilClass(Receiver, twitterUsername, twitterPassword)
