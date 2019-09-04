@@ -42,6 +42,12 @@ class ybsTwitterUtilClass:
 
 	# Send tweet
 	def twitterPost(self):
+		try:
+			picInputEle = self.twitterBrowser.find_element_by_class_name('r-8akbif')
+		except Exception:
+			logging.info('Specialized input not occur...')
+			self.twitterBrowser.find_element_by_xpath('/html/body/div/div/div/div/main/div/div/div/div[1]/div/a/div[2]/div').click()
+			time.sleep(3)
 		# Picture
 		picInputEle = self.twitterBrowser.find_element_by_class_name('r-8akbif')
 		# Random pictures
@@ -51,7 +57,11 @@ class ybsTwitterUtilClass:
 		time.sleep(2)
 
 		# AT
-		self.twitterBrowser.find_element_by_xpath('/html/body/div/div/div/div/main/div/div/div/div[1]/div/div[2]/div[2]/div[1]/div/div/div[2]/div[1]/div/div/div/div/div/div/div/div/div[1]/div/div/div/div[2]/div/div/div/div').click()
+		try:
+			self.twitterBrowser.find_element_by_xpath('/html/body/div/div/div/div/main/div/div/div/div[1]/div/div[2]/div[2]/div[1]/div/div/div[2]/div[1]/div/div/div/div/div/div/div/div/div[1]/div/div/div/div[2]/div/div/div/div').click()
+		except Exception:
+			logging.info('Specialized AT occur...')
+
 		ActionChains(self.twitterBrowser).send_keys(self.Receiver).perform()
 		ActionChains(self.twitterBrowser).send_keys(Keys.ENTER).perform()
 		
@@ -69,7 +79,11 @@ class ybsTwitterUtilClass:
 
 		# Submit
 		time.sleep(3)
-		self.twitterBrowser.find_elements_by_class_name('r-1fneopy')[2].click()
+		try:
+			self.twitterBrowser.find_elements_by_class_name('r-1fneopy')[2].click()
+		except Exception:
+			logging.info('Specialized post occur...')
+			self.twitterBrowser.find_elements_by_class_name('r-1fneopy')[0].click()
 
 	def run(self):
 		logging.info('Running...  timestamp: ' + str(time.time()))
@@ -97,14 +111,6 @@ if __name__ == "__main__":
                     '%(asctime)s - %(pathname)s[line:%(lineno)d] - %(levelname)s: %(message)s'
                     #日志格式
                     )
-	t = ybsTwitterUtilClass()
+	t = ybsTwitterUtilClass('@user','user','passwd')
 	t.run()
-
-
-
-
-
-
-
-
 
